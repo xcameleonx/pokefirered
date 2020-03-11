@@ -122,7 +122,7 @@ weather_set: @ 8079CF4
 	beq _08079D0A
 	cmp r4, 0xD
 	beq _08079D0A
-	bl play_some_sound
+	bl PlayRainStoppingSoundEffect
 _08079D0A:
 	ldr r1, _08079D4C @ =gUnknown_2037F34
 	ldr r2, _08079D50 @ =0x000006d1
@@ -170,7 +170,7 @@ sub_8079D60: @ 8079D60
 	adds r4, r0, 0
 	lsls r4, 24
 	lsrs r4, 24
-	bl play_some_sound
+	bl PlayRainStoppingSoundEffect
 	ldr r0, _08079D84 @ =gUnknown_2037F34
 	movs r2, 0xDA
 	lsls r2, 3
@@ -193,7 +193,7 @@ sub_8079D8C: @ 8079D8C
 	adds r4, r0, 0
 	lsls r4, 24
 	lsrs r4, 24
-	bl play_some_sound
+	bl PlayRainStoppingSoundEffect
 	ldr r1, _08079DB8 @ =gUnknown_2037F34
 	movs r2, 0xDA
 	lsls r2, 3
@@ -1584,8 +1584,8 @@ _0807A810: .4byte 0x000006c6
 _0807A814: .4byte 0x000006c2
 	thumb_func_end sub_807A7C4
 
-	thumb_func_start fade_screen
-fade_screen: @ 807A818
+	thumb_func_start FadeScreen
+FadeScreen: @ 807A818
 	push {r4,r5,lr}
 	sub sp, 0x4
 	lsls r0, 24
@@ -1735,10 +1735,10 @@ _0807A934: .4byte gUnknown_2037F34
 _0807A938: .4byte 0x000006c6
 _0807A93C: .4byte 0x000006ca
 _0807A940: .4byte 0x000006cb
-	thumb_func_end fade_screen
+	thumb_func_end FadeScreen
 
-	thumb_func_start sub_807A944
-sub_807A944: @ 807A944
+	thumb_func_start FieldWeather_StartFadingOutCreditsMap
+FieldWeather_StartFadingOutCreditsMap: @ 807A944
 	push {r4-r6,lr}
 	sub sp, 0x4
 	adds r6, r2, 0
@@ -1887,10 +1887,10 @@ _0807AA60: .4byte gUnknown_2037F34
 _0807AA64: .4byte 0x000006c6
 _0807AA68: .4byte 0x000006ca
 _0807AA6C: .4byte 0x000006cb
-	thumb_func_end sub_807A944
+	thumb_func_end FieldWeather_StartFadingOutCreditsMap
 
-	thumb_func_start sub_807AA70
-sub_807AA70: @ 807AA70
+	thumb_func_start IsWeatherNotFadingIn
+IsWeatherNotFadingIn: @ 807AA70
 	ldr r0, _0807AA84 @ =gUnknown_2037F34
 	ldr r1, _0807AA88 @ =0x000006c6
 	adds r0, r1
@@ -1904,10 +1904,10 @@ sub_807AA70: @ 807AA70
 	.align 2, 0
 _0807AA84: .4byte gUnknown_2037F34
 _0807AA88: .4byte 0x000006c6
-	thumb_func_end sub_807AA70
+	thumb_func_end IsWeatherNotFadingIn
 
-	thumb_func_start sub_807AA8C
-sub_807AA8C: @ 807AA8C
+	thumb_func_start UpdateSpritePaletteWithWeather
+UpdateSpritePaletteWithWeather: @ 807AA8C
 	push {r4-r6,lr}
 	lsls r0, 24
 	lsrs r0, 8
@@ -2017,7 +2017,7 @@ _0807AB68:
 	bx r0
 	.align 2, 0
 _0807AB70: .4byte 0x000073fc
-	thumb_func_end sub_807AA8C
+	thumb_func_end UpdateSpritePaletteWithWeather
 
 	thumb_func_start sub_807AB74
 sub_807AB74: @ 807AB74
@@ -2078,7 +2078,7 @@ sub_807ABC0: @ 807ABC0
 	movs r2, 0x20
 	bl LoadPalette
 	ldrb r0, [r4]
-	bl sub_807AA8C
+	bl UpdateSpritePaletteWithWeather
 	pop {r4}
 	pop {r0}
 	bx r0
@@ -2250,7 +2250,7 @@ _0807AD14:
 	movs r1, 0x7F
 	ands r0, r1
 	strh r0, [r2]
-	ldr r1, _0807AD5C @ =gUnknown_825E074
+	ldr r1, _0807AD5C @ =gSineTable
 	movs r3, 0
 	ldrsh r0, [r2, r3]
 	lsls r0, 1
@@ -2278,7 +2278,7 @@ _0807AD54:
 	strh r0, [r4]
 	b _0807ADA0
 	.align 2, 0
-_0807AD5C: .4byte gUnknown_825E074
+_0807AD5C: .4byte gSineTable
 _0807AD60: .4byte 0x0000073c
 _0807AD64: .4byte 0x0000073e
 _0807AD68:
@@ -2561,8 +2561,8 @@ _0807AF92:
 	bx r0
 	thumb_func_end sub_807AF00
 
-	thumb_func_start weather_get_current
-weather_get_current: @ 807AF98
+	thumb_func_start GetCurrentWeather
+GetCurrentWeather: @ 807AF98
 	ldr r0, _0807AFA4 @ =gUnknown_2037F34
 	movs r1, 0xDA
 	lsls r1, 3
@@ -2571,7 +2571,7 @@ weather_get_current: @ 807AF98
 	bx lr
 	.align 2, 0
 _0807AFA4: .4byte gUnknown_2037F34
-	thumb_func_end weather_get_current
+	thumb_func_end GetCurrentWeather
 
 	thumb_func_start SetRainStrengthFromSoundEffect
 SetRainStrengthFromSoundEffect: @ 807AFA8
@@ -2625,8 +2625,8 @@ _0807AFFA:
 _0807B000: .4byte 0x000006dd
 	thumb_func_end SetRainStrengthFromSoundEffect
 
-	thumb_func_start play_some_sound
-play_some_sound: @ 807B004
+	thumb_func_start PlayRainStoppingSoundEffect
+PlayRainStoppingSoundEffect: @ 807B004
 	push {lr}
 	bl IsSpecialSEPlaying
 	lsls r0, 24
@@ -2658,7 +2658,7 @@ _0807B03C:
 _0807B042:
 	pop {r0}
 	bx r0
-	thumb_func_end play_some_sound
+	thumb_func_end PlayRainStoppingSoundEffect
 
 	thumb_func_start sub_807B048
 sub_807B048: @ 807B048
@@ -2672,8 +2672,8 @@ _0807B054: .4byte gUnknown_2037F34
 _0807B058: .4byte 0x000006d3
 	thumb_func_end sub_807B048
 
-	thumb_func_start sub_807B05C
-sub_807B05C: @ 807B05C
+	thumb_func_start SetWeatherScreenFadeOut
+SetWeatherScreenFadeOut: @ 807B05C
 	ldr r0, _0807B068 @ =gUnknown_2037F34
 	ldr r1, _0807B06C @ =0x000006c6
 	adds r0, r1
@@ -2683,7 +2683,7 @@ sub_807B05C: @ 807B05C
 	.align 2, 0
 _0807B068: .4byte gUnknown_2037F34
 _0807B06C: .4byte 0x000006c6
-	thumb_func_end sub_807B05C
+	thumb_func_end SetWeatherScreenFadeOut
 
 	thumb_func_start sub_807B070
 sub_807B070: @ 807B070
@@ -2698,8 +2698,8 @@ _0807B07C: .4byte gUnknown_2037F34
 _0807B080: .4byte 0x000006c6
 	thumb_func_end sub_807B070
 
-	thumb_func_start sub_807B084
-sub_807B084: @ 807B084
+	thumb_func_start PreservePaletteInWeather
+PreservePaletteInWeather: @ 807B084
 	push {r4,r5,lr}
 	adds r4, r0, 0
 	lsls r4, 24
@@ -2721,10 +2721,10 @@ sub_807B084: @ 807B084
 _0807B0A8: .4byte gUnknown_83C2CC0
 _0807B0AC: .4byte gUnknown_2038684
 _0807B0B0: .4byte gUnknown_20386A4
-	thumb_func_end sub_807B084
+	thumb_func_end PreservePaletteInWeather
 
-	thumb_func_start sub_807B0B4
-sub_807B0B4: @ 807B0B4
+	thumb_func_start ResetPreservedPalettesInWeather
+ResetPreservedPalettesInWeather: @ 807B0B4
 	ldr r1, _0807B0BC @ =gUnknown_20386A4
 	ldr r0, _0807B0C0 @ =gUnknown_83C2CC0
 	str r0, [r1]
@@ -2732,7 +2732,7 @@ sub_807B0B4: @ 807B0B4
 	.align 2, 0
 _0807B0BC: .4byte gUnknown_20386A4
 _0807B0C0: .4byte gUnknown_83C2CC0
-	thumb_func_end sub_807B0B4
+	thumb_func_end ResetPreservedPalettesInWeather
 
 	thumb_func_start sub_807B0C4
 sub_807B0C4: @ 807B0C4
@@ -2804,8 +2804,8 @@ sav1_get_weather_probably: @ 807B130
 _0807B13C: .4byte gSaveBlock1Ptr
 	thumb_func_end sav1_get_weather_probably
 
-	thumb_func_start sub_807B140
-sub_807B140: @ 807B140
+	thumb_func_start SetSav1WeatherFromCurrMapHeader
+SetSav1WeatherFromCurrMapHeader: @ 807B140
 	push {r4,r5,lr}
 	ldr r4, _0807B16C @ =gSaveBlock1Ptr
 	ldr r0, [r4]
@@ -2828,7 +2828,7 @@ sub_807B140: @ 807B140
 	.align 2, 0
 _0807B16C: .4byte gSaveBlock1Ptr
 _0807B170: .4byte gMapHeader
-	thumb_func_end sub_807B140
+	thumb_func_end SetSav1WeatherFromCurrMapHeader
 
 	thumb_func_start SetWeather
 SetWeather: @ 807B174

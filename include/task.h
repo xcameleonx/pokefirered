@@ -3,7 +3,11 @@
 
 #include "global.h"
 
+#define HEAD_SENTINEL 0xFE
+#define TAIL_SENTINEL 0xFF
+
 #define NUM_TASKS 16
+#define NUM_TASK_DATA 16
 
 typedef void (*TaskFunc)(u8 taskId);
 
@@ -14,7 +18,7 @@ struct Task
     u8 prev;
     u8 next;
     u8 priority;
-    s16 data[16];
+    s16 data[NUM_TASK_DATA];
 };
 
 extern struct Task gTasks[];

@@ -2,5 +2,8 @@
 #define GUARD_BIKE_H
 
 void sub_80BD620(u32 unkC, u32 unk10);
+bool8 sub_80BD540(void);
+void StartTransitionToFlipBikeState(u8 flags);
+s16 GetPlayerSpeed(void);
 
 #endif //GUARD_BIKE_H
